@@ -1,0 +1,7 @@
+#!/bin/sh
+
+docker build . \
+    -t local_bash \
+    | grep built | awk '{print $3}' | tee build-id
+
+

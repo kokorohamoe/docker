@@ -1,0 +1,10 @@
+ docker  create -it  -v /usr:/usr -v /lib64:/lib64 -v /etc:/etc -v/home:/home -v /bin:/bin -v /sbin:/sbin d7b772047bff
+
+docker run -d \
+  -it \
+  --name volumetest \
+  --mount type=bind,source="$(pwd)"/bin,target=/bin \
+  vt1:latest
+
+
+
