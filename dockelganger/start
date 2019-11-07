@@ -1,3 +1,12 @@
 #!/bin/bash
-/usr/bin/docker start  \
-    `cat create-id` 
+
+A=`cat create-id`
+
+K=`/usr/bin/docker start $A`
+
+docker exec -u 0 $A /usr/sbin/usermod -aG docker ec2-user
+docker exec -u 0 $A id ec2-user
+echo $K
+
+docker exec -u 1000 $A id
+

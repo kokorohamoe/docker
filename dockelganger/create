@@ -1,11 +1,11 @@
 #!/bin/bash
 /usr/bin/docker create -it  \
-    -v "/usr:/usr" \
-    -v "/lib64:/lib64" \
-    -v "/etc:/etc" \
-    -v "`pwd`/home:/home" \
-    -v /bin:/bin \
-    -v /sbin:/sbin \
+    -u $(id -u):$(id -g) \
+    -v /usr:/usr:ro \
+    -v /usr/sbin:/usr/sbin:ro \
+    -v /lib64:/lib64:ro \
+    -v /bin:/bin:ro \
+    -v /sbin:/sbin:ro \
     -v /var/run/docker.sock:/var/run/docker.sock \
     `cat build-id` /bin/bash \
    | tee create-id 

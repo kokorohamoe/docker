@@ -1,10 +1,26 @@
 #!/bin/sh
-
+cp /etc/group ./
+cp /etc/passwd ./
+sudo cp /etc/shadow ./
+sudo cp /etc/sudoers ./
 D=`pwd`
 D=`basename $D`
 echo "name=$D"
 docker build . \
     -t "$D" \
-    | grep built | awk '{print $3}' | tee build-id
+    | tee build.log
+echo
+cat build.log | grep built | awk '{print $3}' | tee build-id
+echo
+A=`./create`
+./start
+
+#docker exec $A /usr/sbin/groupadd -g 993 docker
+#docker exec $A /usr/sbin/useradd -u 1000 ec2-user
+#docker exec $A /usr/sbin/usermod -aG docker ec2-user
+
+echo $A
+echo $D
+docker commit $A $D | tee build-id
 
 
