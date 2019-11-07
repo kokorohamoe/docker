@@ -1,7 +1,10 @@
 #!/bin/sh
 
+D=`pwd`
+D=`basename $D`
+echo "name=$D"
 docker build . \
-    -t local_bash \
+    -t $D \
     | grep built | awk '{print $3}' | tee build-id
 
 
