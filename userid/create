@@ -1,5 +1,5 @@
 #!/bin/bash
-/usr/bin/docker create -i  \
+/usr/bin/docker create -it  \
     -v "/usr:/usr" \
     -v "/lib64:/lib64" \
     -v "/etc:/etc" \
