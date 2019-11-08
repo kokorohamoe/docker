@@ -1,8 +1,4 @@
 #!/bin/sh
-cp /etc/group ./
-cp /etc/passwd ./
-sudo cp /etc/shadow ./
-sudo cp /etc/sudoers ./
 D=`pwd`
 D=`basename $D`
 echo "name=$D"
