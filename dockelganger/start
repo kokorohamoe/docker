@@ -2,11 +2,15 @@
 
 A=`cat create-id`
 
+echo "docker ContainerID(saved)  ="$A
+
 K=`/usr/bin/docker start $A`
+echo "docker ContainerID(started)="$A
+#echo "docker ContainerID="$A
 
 docker exec -u 0 $A /usr/sbin/usermod -aG docker ec2-user
-docker exec -u 0 $A id ec2-user
-echo $K
+echo "Groups from root    : `docker exec -u 0 $A id ec2-user`"
+#echo $K
 
-docker exec -u 1000 $A id
+echo "Groups from ec2user : `docker exec -u 1000 $A id`"
 
