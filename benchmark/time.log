@@ -1,0 +1,28 @@
+name=benchmark
+Sending build context to Docker daemon  428.2MB
+Step 1/7 : FROM centos
+ ---> 0f3e07c0138f
+Step 2/7 : RUN yum -y groupinstall "Development Tools"
+ ---> Using cache
+ ---> c6e752d07237
+Step 3/7 : RUN git clone -b 2.7 https://github.com/python/cpython.git
+ ---> Using cache
+ ---> f6e78867b636
+Step 4/7 : RUN cd cpython
+ ---> Using cache
+ ---> 478b142a9434
+Step 5/7 : RUN cd cpython;./configure --enable-unicode=ucs4 --prefix=$HOME/.local
+ ---> Using cache
+ ---> ae9c97e4678f
+Step 6/7 : RUN cd cpython;time make 2>&1 | tee time.log
+ ---> Using cache
+ ---> c4c23adf5934
+Step 7/7 : ENTRYPOINT []
+ ---> Running in 14eb402acc96
+Removing intermediate container 14eb402acc96
+ ---> 0ebf6f8100d4
+Successfully built 0ebf6f8100d4
+Successfully tagged benchmark:latest
+
+0ebf6f8100d4
+

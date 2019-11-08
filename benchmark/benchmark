@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./build | tee time.log
+
+#RUN yum -y groupinstall "Development Tools"
+git clone -b 2.7 https://github.com/python/cpython.git
+cd cpython
+cd cpython;./configure --enable-unicode=ucs4 --prefix=$HOME/.local
+cd cpython;time make 2>&1 >> time.log
