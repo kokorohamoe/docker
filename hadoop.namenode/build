@@ -1,0 +1,12 @@
+#!/bin/sh
+D=`pwd`
+D=`basename $D`
+echo "name=$D"
+docker build . \
+    -t "$D" \
+    | tee build.log
+echo
+cat build.log | grep built | awk '{print $3}' | tee build-id
+echo
+
+
