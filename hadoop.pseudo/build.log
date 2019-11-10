@@ -1,0 +1,50 @@
+Sending build context to Docker daemon  14.34kB
+Step 1/15 : FROM centos
+ ---> 0f3e07c0138f
+Step 2/15 : RUN yum -y install wget
+ ---> Using cache
+ ---> 49e39369910f
+Step 3/15 : RUN wget https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm
+ ---> Using cache
+ ---> 267d34907282
+Step 4/15 : RUN rpm -ivh cloudera-cdh-5-0.x86_64.rpm
+ ---> Using cache
+ ---> a8549d93d709
+Step 5/15 : RUN yum repolist
+ ---> Using cache
+ ---> 79ed75cd286e
+Step 6/15 : RUN yum -y install sudo
+ ---> Using cache
+ ---> 7e21b30af4e7
+Step 7/15 : RUN yum -y install java-1.8.0-openjdk-devel
+ ---> Using cache
+ ---> 04159f969cc7
+Step 8/15 : RUN export JAVA_HOME=/usr/lib/jvm/jre-1.8.0/
+ ---> Using cache
+ ---> 30e89f5a5709
+Step 9/15 : RUN java -version
+ ---> Using cache
+ ---> 9bd142d579ad
+Step 10/15 : RUN yum -y install hadoop
+ ---> Using cache
+ ---> 7ed576b663f6
+Step 11/15 : RUN yum -y install hadoop-hdfs-namenode
+ ---> Using cache
+ ---> f2b2bc301113
+Step 12/15 : RUN yum -y install hadoop-conf-pseudo
+ ---> Using cache
+ ---> beab611515b5
+Step 13/15 : RUN hadoop namenode -format
+ ---> Using cache
+ ---> 7020095b30d7
+Step 14/15 : RUN ip -f inet -o addr show docker0|cut -d\  -f 7 | cut -d/ -f 1 > name.host
+ ---> Running in 614e9f04b69c
+[91mDevice "docker0" does not exist.
+[0mRemoving intermediate container 614e9f04b69c
+ ---> 63d4c2c36858
+Step 15/15 : ENTRYPOINT /usr/bin/hadoop namenode
+ ---> Running in d471b2e9c0f2
+Removing intermediate container d471b2e9c0f2
+ ---> 3bbb2590cf09
+Successfully built 3bbb2590cf09
+Successfully tagged hadoop.namenode:latest

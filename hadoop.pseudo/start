@@ -1,0 +1,13 @@
+#!/bin/bash
+
+A=`cat create-id`
+
+echo "docker ContainerID(saved)  ="$A
+
+K=`/usr/bin/docker start $A`
+echo "docker ContainerID(started)="$A
+#echo "docker ContainerID="$A
+
+#echo $K
+
+
