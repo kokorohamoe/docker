@@ -1,50 +1,77 @@
-Sending build context to Docker daemon  14.34kB
-Step 1/15 : FROM centos
+Sending build context to Docker daemon  14.85kB
+Step 1/25 : FROM centos
  ---> 0f3e07c0138f
-Step 2/15 : RUN yum -y install wget
+Step 2/25 : RUN yum -y install wget
  ---> Using cache
  ---> 49e39369910f
-Step 3/15 : RUN wget https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm
+Step 3/25 : RUN wget https://archive.cloudera.com/cdh5/one-click-install/redhat/7/x86_64/cloudera-cdh-5-0.x86_64.rpm
  ---> Using cache
  ---> 267d34907282
-Step 4/15 : RUN rpm -ivh cloudera-cdh-5-0.x86_64.rpm
+Step 4/25 : RUN rpm -ivh cloudera-cdh-5-0.x86_64.rpm
  ---> Using cache
  ---> a8549d93d709
-Step 5/15 : RUN yum repolist
+Step 5/25 : RUN yum repolist
  ---> Using cache
  ---> 79ed75cd286e
-Step 6/15 : RUN yum -y install sudo
+Step 6/25 : RUN yum -y install sudo
  ---> Using cache
  ---> 7e21b30af4e7
-Step 7/15 : RUN yum -y install java-1.8.0-openjdk-devel
+Step 7/25 : RUN yum -y install java-1.8.0-openjdk-devel
  ---> Using cache
  ---> 04159f969cc7
-Step 8/15 : RUN export JAVA_HOME=/usr/lib/jvm/jre-1.8.0/
+Step 8/25 : RUN export JAVA_HOME=/usr/lib/jvm/jre-1.8.0/
  ---> Using cache
  ---> 30e89f5a5709
-Step 9/15 : RUN java -version
+Step 9/25 : RUN java -version
  ---> Using cache
  ---> 9bd142d579ad
-Step 10/15 : RUN yum -y install hadoop
+Step 10/25 : RUN yum -y install hadoop
  ---> Using cache
  ---> 7ed576b663f6
-Step 11/15 : RUN yum -y install hadoop-hdfs-namenode
+Step 11/25 : RUN yum -y install hadoop-hdfs-namenode
  ---> Using cache
  ---> f2b2bc301113
-Step 12/15 : RUN yum -y install hadoop-conf-pseudo
+Step 12/25 : RUN yum -y install hadoop-hdfs-datanode
  ---> Using cache
- ---> beab611515b5
-Step 13/15 : RUN hadoop namenode -format
+ ---> 80e798c3dd6b
+Step 13/25 : RUN yum -y install hadoop-conf-pseudo
  ---> Using cache
- ---> 7020095b30d7
-Step 14/15 : RUN ip -f inet -o addr show docker0|cut -d\  -f 7 | cut -d/ -f 1 > name.host
- ---> Running in 614e9f04b69c
-[91mDevice "docker0" does not exist.
-[0mRemoving intermediate container 614e9f04b69c
- ---> 63d4c2c36858
-Step 15/15 : ENTRYPOINT /usr/bin/hadoop namenode
- ---> Running in d471b2e9c0f2
-Removing intermediate container d471b2e9c0f2
- ---> 3bbb2590cf09
-Successfully built 3bbb2590cf09
-Successfully tagged hadoop.namenode:latest
+ ---> 064b83fe6047
+Step 14/25 : RUN hadoop namenode -format
+ ---> Using cache
+ ---> 51cc4fa0e5f3
+Step 15/25 : RUN ip -f inet -o addr show docker0|cut -d\  -f 7 | cut -d/ -f 1 > name.host
+ ---> Using cache
+ ---> 81bec5871912
+Step 16/25 : RUN chown root /var/run/hadoop-hdfs
+ ---> Using cache
+ ---> c1fd3dcad1a0
+Step 17/25 : RUN echo "#!/usr/bin/bash" > service
+ ---> Using cache
+ ---> d3176b0da24e
+Step 18/25 : RUN echo "/usr/bin/hadoop namenode 2>&1 &" >> service
+ ---> Using cache
+ ---> f8d0016abfc7
+Step 19/25 : RUN echo "/usr/bin/hadoop datanode 2>&1 &" >> service
+ ---> Using cache
+ ---> 5f9ad16214ff
+Step 20/25 : RUN echo "ps -ef | grep hadoop" >> service
+ ---> Using cache
+ ---> 27605222652a
+Step 21/25 : RUN echo "#!/usr/bin/bash" > entrypoint
+ ---> Using cache
+ ---> 5efd3127c069
+Step 22/25 : RUN echo "/usr/bin/bash service > /var/log/hadoop.log " >> entrypoint
+ ---> Using cache
+ ---> af27c0ca0f68
+Step 23/25 : RUN echo "/usr/bin/bash" >> entrypoint
+ ---> Using cache
+ ---> e898e3a0add1
+Step 24/25 : RUN chmod +x entrypoint
+ ---> Using cache
+ ---> 4384c5f9a1ec
+Step 25/25 : CMD /usr/bin/bash entrypoint
+ ---> Using cache
+ ---> 6a665003fece
+Successfully built 6a665003fece
+Successfully tagged hadoop.pseudo:latest

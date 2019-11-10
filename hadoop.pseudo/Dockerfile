@@ -18,11 +18,27 @@ RUN java -version
 
 RUN yum -y install hadoop
 RUN yum -y install hadoop-hdfs-namenode
+RUN yum -y install hadoop-hdfs-datanode
 RUN yum -y install hadoop-conf-pseudo
 
 RUN hadoop namenode -format
 RUN ip -f inet -o addr show docker0|cut -d\  -f 7 | cut -d/ -f 1 > name.host
 
-ENTRYPOINT /usr/bin/hadoop namenode
+RUN chown root /var/run/hadoop-hdfs
+
+RUN echo "#!/usr/bin/bash" > service
+RUN echo "/usr/bin/hadoop namenode 2>&1 &" >> service
+RUN echo "/usr/bin/hadoop datanode 2>&1 &" >> service 
+RUN echo "ps -ef | grep hadoop" >> service
+#RUN echo "/usr/bin/bash" >> service
+#RUN /usr/bin/bash service > /var/log/hadoop.log
+
+RUN echo "#!/usr/bin/bash" > entrypoint
+RUN echo "/usr/bin/bash service > /var/log/hadoop.log " >> entrypoint
+RUN echo "/usr/bin/bash" >> entrypoint
+RUN chmod +x entrypoint
+#ENTRYPOINT  ["entrypoint"]
+CMD /usr/bin/bash entrypoint
+
 #
 #
