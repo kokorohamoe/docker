@@ -7,7 +7,7 @@ cp /etc/hadoop/conf/core-site.xml ./
 docker build . \
     -t "$D" \
     | tee build.log
-#rm -f ./passwd
+rm -f ./passwd
 echo
 cat build.log | grep built | awk '{print $3}' | tee build-id
 echo
