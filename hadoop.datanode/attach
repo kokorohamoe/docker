@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+A=`cat create-id`
+
+echo "docker ContainerID="$A
+
+/usr/bin/docker attach  \
+    $A 

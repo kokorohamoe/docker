@@ -1,0 +1,3 @@
+#!/bin/sh
+hadoop dfsadmin -report 2>&1 | grep -e name -e 192 -e node -e second -e denied
+

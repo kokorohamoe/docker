@@ -1,0 +1,21 @@
+#!/bin/bash
+
+D=`pwd`
+D=`basename $D`
+echo "name=$D"
+B=`cat build-id`
+echo "build=$B"
+
+/usr/bin/docker run -d \
+    --net=userdefinednw \
+    $B  & 2>/dev/null > /dev/null 
+
+sleep 3
+    
+#	-v /usr/sbin:/usr/sbin:ro \
+#    -v /lib64:/lib64:ro \
+#    -v /bin:/bin:ro \
+#    -v /sbin:/sbin:ro \
+#    `cat build-id` /bin/bash \
+#   | tee create-id 
+
