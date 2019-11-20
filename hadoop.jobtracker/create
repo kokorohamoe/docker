@@ -1,0 +1,13 @@
+#!/bin/bash
+/usr/bin/docker create -it  \
+    --net=userdefinednw  \
+    `cat build-id` /bin/bash \
+   | tee create-id
+    
+#	-v /usr/sbin:/usr/sbin:ro \
+#    -v /lib64:/lib64:ro \
+#    -v /bin:/bin:ro \
+#    -v /sbin:/sbin:ro \
+#    `cat build-id` /bin/bash \
+#   | tee create-id 
+

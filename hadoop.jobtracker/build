@@ -1,0 +1,14 @@
+#!/bin/sh
+D=`pwd`
+D=`basename $D`
+echo "name=$D"
+#cp /etc/hadoop/conf/core-site.xml ./
+docker build . \
+    -t "$D" \
+    | tee build.log
+echo
+cat build.log | grep built | awk '{print $3}' | tee build-id.sid
+echo "$D" > build-id
+echo
+
+
