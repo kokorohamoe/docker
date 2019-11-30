@@ -12,6 +12,7 @@ hosts = [
 import os
 import sys
 import subprocess
+import stat
 
 param = sys.argv
 param.append("")
@@ -19,11 +20,18 @@ param.append("")
 #print(param)
 
 if param[1][-1] == "2" :
-    param[0] = "/usr/bin/docker"
+    oldpath = param[0]
+    #param[0] = "/usr/bin/docker"
+    param[0] = "docker"
+    os.system('chmod -x '+oldpath)
+
+
     param[1] = param[1][0:-1]
     for host in hosts:
         os.environ["DOCKER_HOST"]=host
         subprocess.call(" ".join(param).split())
+
+    os.system('chmod +x '+oldpath)
 
 else:
     param[0] = "/usr/bin/docker"
